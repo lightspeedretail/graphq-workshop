@@ -6,7 +6,8 @@ import { Product } from './products.fixture';
 
 export interface ProductResolvers extends IResolvers {
   Query: {
-    products: Resolver<undefined, undefined, Product[]>;
+    products: Resolver<undefined, { name?: string }, Product[]>;
+    product: Resolver<undefined, { id: string }, Product | undefined>;
   };
   // Mutation: {
   //   addProduct: Resolver<undefined, { name: string; price: number; description?: string }, Product>;
@@ -21,6 +22,13 @@ export interface ProductResolvers extends IResolvers {
 
 export const productResolvers: ProductResolvers = {
   Query: {
-    products: () => [],
+    products: (_source, args, context) => {
+      if (args.name) {
+        return context.dataSources.productsDataSource.getProductsByName(args.name);
+      }
+      return context.dataSources.productsDataSource.getProducts();
+    },
+    product: (_source, args, context) =>
+      context.dataSources.productsDataSource.findProduct(args.id),
   },
 };

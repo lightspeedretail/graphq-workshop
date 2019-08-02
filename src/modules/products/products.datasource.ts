@@ -17,7 +17,9 @@ export class ProductsDatasource extends DataSource<HospitalityContext> {
   }
 
   getProductsByName(name: string): Product[] {
-    return this.products.filter(product => product.name.indexOf(name) >= 0);
+    return this.products.filter(
+      product => product.name.toLowerCase().indexOf(name.toLowerCase()) >= 0,
+    );
   }
 
   findProduct(id: string): Product | undefined {
@@ -55,7 +57,7 @@ export class ProductsDatasource extends DataSource<HospitalityContext> {
 
   getProductCategoriesByName(name: string): ProductCategory[] {
     return this.productCategories.filter(
-      productCategory => productCategory.name.indexOf(name) >= 0,
+      productCategory => productCategory.name.toLowerCase().indexOf(name.toLowerCase()) >= 0,
     );
   }
 
