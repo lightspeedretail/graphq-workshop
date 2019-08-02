@@ -1,0 +1,51 @@
+{
+  "name": "@lightspeed/graphql-workshop",
+  "version": "1.0.0",
+  "description": "A workshop learning the basics of GraphQL",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "NODE_ENV=development PORT=3000 nodemon --watch src --legacy-watch --exec 'babel-node' -- --extensions '.ts,.tsx' ./src/index.ts",
+    "build": "babel src --out-dir dist --delete-dir-on-start --extensions '.ts,.tsx'",
+    "start": "NODE_ENV=production PORT=3000 node ./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lightspeedretail/graphql-workshop.git"
+  },
+  "keywords": [
+    "lunch-and-learn",
+    "GraphQL",
+    "Typescript",
+    "Apollo",
+    "Javascript"
+  ],
+  "author": "Joris De Smedt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lightspeedretail/graphql-workshop/issues"
+  },
+  "homepage": "https://github.com/lightspeedretail/graphql-workshop#readme",
+  "devDependencies": {
+    "@lightspeed/config-prettier": "^0.1.2",
+    "@lightspeed/config-typescript": "^0.3.1",
+    "@lightspeed/eslint-config": "^0.5.0",
+    "@types/graphql": "^14.2.3",
+    "@types/uuid": "^3.4.5",
+    "nodemon": "^1.19.1"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@lightspeed/babel-preset-node": "^0.3.2",
+    "apollo-server-core": "^2.8.0",
+    "apollo-server-express": "^2.8.0",
+    "express": "^4.17.1",
+    "graphql": "^14.4.2",
+    "graphql-tools": "^4.0.5",
+    "merge-graphql-schemas": "^1.6.2-3705b28.0",
+    "typescript": "^3.5.3",
+    "uuid": "^3.3.2"
+  }
+}
