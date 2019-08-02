@@ -12,6 +12,7 @@ export const productTypDefs = gql`
     id: ID
     name: String
     description: String
+    products: [Product!]!
   }
 
   type Query {
@@ -28,5 +29,6 @@ export const productTypDefs = gql`
     addCategory(name: String!, description: String): ProductCategory
     updateCategory(id: ID!, name: String, description: String): ProductCategory
     deleteCategory(id: ID!): String
+    addProductsToCategory(products: [ID!]!, category: ID!): ProductCategory
   }
 `;

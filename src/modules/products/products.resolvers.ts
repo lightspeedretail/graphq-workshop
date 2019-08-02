@@ -2,14 +2,15 @@ import { IResolvers } from 'graphql-tools';
 import { Resolver } from '../../types/graphql-utils.types';
 import { Product, ProductCategory } from './products.fixture';
 
-// uncomment these types when needed
-
 export interface ProductResolvers extends IResolvers {
   Query: {
     products: Resolver<undefined, { name?: string }, Product[]>;
     product: Resolver<undefined, { id: string }, Product | undefined>;
     categories: Resolver<undefined, { name?: string }, ProductCategory[]>;
     category: Resolver<undefined, { id: string }, ProductCategory | undefined>;
+  };
+  ProductCategory: {
+    products: Resolver<ProductCategory, undefined, (Product | undefined)[]>;
   };
   Mutation: {
     addProduct: Resolver<undefined, { name: string; price: number; description?: string }, Product>;
@@ -26,6 +27,11 @@ export interface ProductResolvers extends IResolvers {
       ProductCategory
     >;
     deleteCategory: Resolver<undefined, { id: string }, string>;
+    addProductsToCategory: Resolver<
+      undefined,
+      { products: string[]; category: string },
+      ProductCategory
+    >;
   };
 }
 
@@ -47,6 +53,12 @@ export const productResolvers: ProductResolvers = {
     },
     category: (_source, args, context) =>
       context.dataSources.productsDataSource.findProductCategory(args.id),
+  },
+  ProductCategory: {
+    products: (category, _args, context) =>
+      category.productIds
+        .map(id => context.dataSources.productsDataSource.findProduct(id))
+        .filter(Boolean),
   },
   Mutation: {
     addProduct: (_source, product, context) =>
@@ -71,6 +83,19 @@ export const productResolvers: ProductResolvers = {
     deleteCategory: (_source, { id }, context) => {
       context.dataSources.productsDataSource.deleteProductCategory(id);
       return id;
+    },
+    addProductsToCategory: (_source, { products, category }, context) => {
+      const oldCategory = context.dataSources.productsDataSource.findProductCategory(category);
+      if (!oldCategory) {
+        throw new Error();
+      }
+      const productIds = [...oldCategory.productIds, ...products];
+      const updatedCategory = { ...oldCategory, productIds };
+      context.dataSources.productsDataSource.updateProductCategory(
+        updatedCategory.id,
+        updatedCategory,
+      );
+      return updatedCategory;
     },
   },
 };
