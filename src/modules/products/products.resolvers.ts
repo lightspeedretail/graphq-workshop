@@ -9,15 +9,15 @@ export interface ProductResolvers extends IResolvers {
     products: Resolver<undefined, { name?: string }, Product[]>;
     product: Resolver<undefined, { id: string }, Product | undefined>;
   };
-  // Mutation: {
-  //   addProduct: Resolver<undefined, { name: string; price: number; description?: string }, Product>;
-  //   updateProduct: Resolver<
-  //     undefined,
-  //     { id: string; name?: string; price?: number; description?: string },
-  //     Product
-  //   >;
-  //   deleteProduct: Resolver<undefined, { id: string }, string>;
-  // };
+  Mutation: {
+    addProduct: Resolver<undefined, { name: string; price: number; description?: string }, Product>;
+    updateProduct: Resolver<
+      undefined,
+      { id: string; name?: string; price?: number; description?: string },
+      Product
+    >;
+    deleteProduct: Resolver<undefined, { id: string }, string>;
+  };
 }
 
 export const productResolvers: ProductResolvers = {
@@ -30,5 +30,18 @@ export const productResolvers: ProductResolvers = {
     },
     product: (_source, args, context) =>
       context.dataSources.productsDataSource.findProduct(args.id),
+  },
+  Mutation: {
+    addProduct: (_source, product, context) =>
+      context.dataSources.productsDataSource.addProduct({
+        description: '',
+        ...product,
+      }),
+    updateProduct: (_source, { id, ...product }, context) =>
+      context.dataSources.productsDataSource.updateProduct(id, product),
+    deleteProduct: (_source, { id }, context) => {
+      context.dataSources.productsDataSource.deleteProduct(id);
+      return id;
+    },
   },
 };

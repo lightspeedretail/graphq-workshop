@@ -12,4 +12,10 @@ export const productTypDefs = gql`
     products(name: String): [Product!]!
     product(id: ID!): Product
   }
+
+  type Mutation {
+    addProduct(name: String!, price: Float!, description: String): Product
+    updateProduct(id: ID!, name: String, price: Float, description: String): Product
+    deleteProduct(id: ID!): String
+  }
 `;
