@@ -37,3 +37,25 @@ query {
     }
 }
 ```
+
+As a last exercise it would be cool to add a mutation so that you actually can add products to a category.
+Add a mutation named `addProductsToCategory` that accepts a list of productIds and a category id as parameter. It should return the updated category as result.
+
+An example query:
+
+```gql
+mutation {
+  addProductsToCategory(
+    products: [
+      "a0a33f01-2820-4780-8e49-c87fd0c34bee"
+      "0044f017-cb43-45d3-98bf-6bb3345304c4"
+    ]
+    category: "6e7e148a-c23a-4094-a71a-04b3b46273c4"
+  ) {
+    name
+    products {
+      name
+    }
+  }
+}
+```
