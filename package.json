@@ -40,7 +40,7 @@
     "@babel/node": "^7.5.5",
     "@lightspeed/babel-preset-node": "^0.3.2",
     "apollo-server-core": "^2.8.0",
-    "apollo-server-express": "^2.8.0",
+    "apollo-server-express": "^2.14.2",
     "express": "^4.17.1",
     "graphql": "^14.4.2",
     "graphql-tools": "^4.0.5",
