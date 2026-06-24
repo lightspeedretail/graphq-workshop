@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
+    "@babel/core": "^7.29.6",
     "@babel/node": "^7.5.5",
     "@lightspeed/babel-preset-node": "^0.3.2",
     "apollo-server-core": "^2.8.0",
